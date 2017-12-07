@@ -32,4 +32,5 @@ if your workload uses fast storage, such as SSD:
    limitations
    differences
    variables
+   status_variables
 

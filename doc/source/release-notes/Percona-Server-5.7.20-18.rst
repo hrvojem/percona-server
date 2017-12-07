@@ -27,6 +27,7 @@ New Features
 Bugs Fixed
 ==========
 
+ * new bug fixed
 
 MyRocks Changes
 ===============
