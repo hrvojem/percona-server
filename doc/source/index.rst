@@ -175,7 +175,8 @@ Percona MyRocks
    Installation <myrocks/install>
    Limitations <myrocks/limitations>
    Differences <myrocks/differences>
-   Variables <myrocks/variables>
+   System Variables <myrocks/variables>
+   Status Variables <myrocks/status_variables>
    myrocks/gap_locks_detection
 
 Reference
