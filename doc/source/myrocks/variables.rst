@@ -565,3 +565,354 @@ that the file access pattern is random,
 when a data file is opened.
 Enabled by default.
 
+.. variable:: rocksdb_allow_concurrent_memtable_write
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-allow-concurrent-memtable-write``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to allow multiple writers to update memtables in parallel.
+Disabled by default.
+
+.. note:: Not all memtables support concurrent writes.
+
+.. variable:: rocksdb_allow_mmap_reads
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-allow-mmap-reads``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to allow the OS to map a data file into memory for reads.
+Disabled by default.
+If you enable this,
+make sure that :variable:`rocksdb_use_direct_reads` is disabled.
+
+.. variable:: rocksdb_allow_mmap_writes
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-allow-mmap-writes``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to allow the OS to map a data file into memory for writes.
+Disabled by default.
+
+.. variable:: rocksdb_base_background_compactions
+
+  :version 5.7.19-17: Implemented
+  :version 5.7.20-18: Replaced by :variable:`rocksdb_max_background_jobs`
+  :cli: ``--rocksdb-base-background-compactions``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``1``
+
+Specifies the suggested number of concurrent background compaction jobs,
+submitted to the default LOW priority thread pool in RocksDB.
+Default is ``1``.
+Allowed range of values is from ``-1`` to ``64``.
+Maximum depends on the :variable:`rocksdb_max_background_compactions`
+variable. This variable has been replaced in |Percona Server| :rn:`5.7.20-18`
+by :variable:`rocksdb_max_background_jobs`, which automatically decides how
+many threads to allocate towards flush/compaction.
+
+.. variable:: rocksdb_block_cache_size
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-block-cache-size``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``536870912``
+
+Specifies the size of the LRU block cache for RocksDB.
+This memory is reserved for the block cache,
+which is in addition to any filesystem caching that may occur.
+
+Minimum value is ``1024``,
+because that's the size of one block.
+
+Default value is ``536870912``.
+
+Maximum value is ``9223372036854775807``.
+
+.. variable:: rocksdb_block_restart_interval
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-block-restart-interval``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``16``
+
+Specifies the number of keys for each set of delta encoded data.
+Default value is ``16``.
+Allowed range is from ``1`` to ``2147483647``.
+
+.. variable:: rocksdb_block_size
+
+  :version 5.7.19-17: Implemented
+  :version 5.7.20-18: Minimum value has chaned from ``0`` to ``1024``
+  :cli: ``--rocksdb-block-size``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``4096``
+
+Specifies the size of the data block for reading RocksDB data files.
+Default value is ``4096``.
+Allowed range is from ``1024`` to ``18446744073709551615``.
+
+.. variable:: rocksdb_block_size_deviation
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-block-size-deviation``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``10``
+
+Specifies the threshold for free space allowed in a data block
+(see :variable:`rocksdb_block_size`).
+If there is less space remaining,
+close the block (and write to new block).
+Default value is ``10``, meaning that the block is not closed
+until there is less than 10 bits of free space remaining.
+
+Allowed range is from ``1`` to ``2147483647``.
+
+.. variable:: rocksdb_bulk_load_allow_unsorted
+
+  :version 5.7.20-18: Implemented
+  :cli: ``--rocksdb-bulk-load-allow-unsorted``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Boolean
+  :default: ``OFF``
+
+By default, the bulk loader requires its input to be sorted in the primary
+key order. If enabled, unsorted inputs are allowed too, which are then
+sorted by the bulkloader itself, at a performance penalty.
+
+.. variable:: rocksdb_bulk_load
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-bulk-load``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to use bulk load:
+MyRocks will ignore checking keys for uniqueness
+or acquiring locks during transactions.
+Disabled by default.
+Enable this only if you are certain that there are no row conflicts,
+for example, when setting up a new MyRocks instance from a MySQL dump.
+
+Enabling this variable will also enable
+the :variable:`rocksdb_commit_in_the_middle` variable.
+
+.. variable:: rocksdb_bulk_load_size
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-bulk-load-size``
+  :dyn: Yes
+  :scope: Global. Session
+  :vartype: Numeric
+  :default: ``1000``
+
+Specifies the number of keys to accumulate
+before committing them to the storage engine when bulk load is enabled
+(see :variable:`rocksdb_bulk_load`).
+Default value is ``1000``,
+which means that a batch can contain up to 1000 records
+before they are implicitly committed.
+Allowed range is from ``1`` to ``1073741824``.
+
+.. variable:: rocksdb_bytes_per_sync
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-bytes-per-sync``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``0``
+
+Specifies how often should the OS sync files to disk
+as they are being written, asynchronously, in the background.
+This operation can be used to smooth out write I/O over time.
+Default value is ``0`` meaning that files are never synced.
+Allowed range is up to ``18446744073709551615``.
+
+.. variable:: rocksdb_cache_index_and_filter_blocks
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-cache-index-and-filter-blocks``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether RocksDB should use the block cache for caching the index
+and bloomfilter data blocks from each data file.
+Enabled by default.
+If you disable this feature,
+RocksDB will allocate additional memory to maintain these data blocks.
+
+.. variable:: rocksdb_checksums_pct
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-checksums-pct``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Numeric
+  :default: ``100``
+
+Specifies the percentage of rows to be checksummed.
+Default value is ``100`` (checksum all rows).
+Allowed range is from ``0`` to ``100``.
+
+.. variable:: rocksdb_collect_sst_properties
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-collect-sst-properties``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether to collect statistics on each data file
+to improve optimizer behavior.
+Enabled by default.
+
+.. variable:: rocksdb_commit_in_the_middle
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-commit-in-the-middle``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to commit rows implicitly
+when a batch contains more than the value of
+:variable:`rocksdb_bulk_load_size`.
+This is disabled by default
+and will be enabled if :variable:`rocksdb_bulk_load` is enabled.
+
+.. variable:: rocksdb_compact_cf
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-compact-cf``
+  :dyn: Yes
+  :scope: Global
+  :vartype: String
+  :default:
+
+Specifies the name of the column family to compact.
+
+.. variable:: rocksdb_compaction_readahead_size
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-compaction-readahead-size``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: ``0``
+
+Specifies the size of reads to perform ahead of compaction.
+Default value is ``0``.
+Set this to at least 2 megabytes (``16777216``)
+when using MyRocks with spinning disks
+to ensure sequential reads instead of random.
+Maximum allowed value is ``18446744073709551615``.
+
+.. note:: If you set this variable to a non-zero value,
+   :variable:`rocksdb_new_table_reader_for_compaction_inputs` is enabled.
+
+.. variable:: rocksdb_compaction_sequential_deletes
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-compaction-sequential-deletes``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: ``0``
+
+Specifies the threshold to trigger compaction on a file
+if it has more than this number of sequential delete markers.
+Default value is ``0`` meaning that compaction is not triggered
+regardless of the number of delete markers.
+Maximum allowed value is ``2000000`` (two million delete markers).
+
+.. note:: Depending on workload patterns,
+   MyRocks can potentially maintain large numbers of delete markers,
+   which increases latency of queries.
+   This compaction feature will reduce latency,
+   but may also increase the MyRocks write rate.
+   Use this variable together with
+   :variable:`rocksdb_compaction_sequential_deletes_file_size`
+   to only perform compaction on large files.
+
+.. variable:: rocksdb_compaction_sequential_deletes_count_sd
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-compaction-sequential-deletes-count-sd``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to count single deletes as delete markers
+recognized by :variable:`rocksdb_compaction_sequential_deletes`.
+Disabled by default.
+
+.. variable:: rocksdb_compaction_sequential_deletes_file_size
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-compaction-sequential-deletes-file-size``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: ``0``
+
+Specifies the minimum file size required to trigger compaction on it
+by :variable:`rocksdb_compaction_sequential_deletes`.
+Default value is ``0``,
+meaning that compaction is triggered regardless of file size.
+Allowed range is from ``-1`` to ``9223372036854775807``.
+
+.. variable:: rocksdb_compaction_sequential_deletes_window
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-compaction-sequential-deletes-window``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: ``0``
+
+Specifies the size of the window for counting delete markers
+by :variable:`rocksdb_compaction_sequential_deletes`.
+Default value is ``0``.
+Allowed range is up to ``2000000`` (two million).
+
+.. variable:: rocksdb_concurrent_prepare
+
+  :version 5.7.20-18: Implemented
+  :cli: ``--rocksdb-concurrent_prepare``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+When enabled this variable allows/encourages threads that are using
+two-phase commit to ``prepare`` in parallel.
