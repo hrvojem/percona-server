@@ -2076,3 +2076,15 @@ Disabled by default.
 Specifies whether to allow statement-based binary logging
 which may break consistency.
 Disabled by default.
+
+.. variable:: rocksdb_update_cf_options
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-update-cf-options``
+  :dyn: No
+  :scope: Global
+  :vartype: String
+  :default:
+
+Specifies option updates for each column family.
+Empty by default.
