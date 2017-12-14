@@ -916,3 +916,436 @@ Allowed range is up to ``2000000`` (two million).
 
 When enabled this variable allows/encourages threads that are using
 two-phase commit to ``prepare`` in parallel.
+
+.. variable:: rocksdb_create_checkpoint
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-create-checkpoint``
+  :dyn: Yes
+  :scope: Global
+  :vartype: String
+  :default:
+
+Specifies the directory where MyRocks should create a checkpoint.
+Empty by default.
+
+.. variable:: rocksdb_create_if_missing
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-create-if-missing``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether MyRocks should create its database if it does not exist.
+Enabled by default.
+
+.. variable:: rocksdb_create_missing_column_families
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-create-missing-column-families``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether MyRocks should create new column families
+if they do not exist.
+Disabled by default.
+
+.. variable:: rocksdb_datadir
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-datadir``
+  :dyn: No
+  :scope: Global
+  :vartype: String
+  :default: ``./.rocksdb``
+
+Specifies the location of the MyRocks data directory.
+By default, it is created in the current working directory.
+
+.. variable:: rocksdb_db_write_buffer_size
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-db-write-buffer-size``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``0``
+
+Specifies the size of the memtable used to store writes in MyRocks.
+This is the size per column family.
+When this size is reached, the memtable is flushed to persistent media.
+Default value is ``0``.
+Allowed range is up to ``18446744073709551615``.
+
+.. variable:: rocksdb_deadlock_detect
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-deadlock-detect``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether MyRocks should detect deadlocks.
+Disabled by default.
+
+.. variable:: rocksdb_deadlock_detect_depth
+
+  :version 5.7.20-18: Implemented
+  :cli: ``--rocksdb-deadlock-detect-depth``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Numeric
+  :default: ``50``
+
+Specifies the number of transactions deadlock detection will traverse
+through before assuming deadlock.
+.. variable:: rocksdb_debug_optimizer_no_zero_cardinality
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-debug-optimizer-no-zero-cardinality``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether MyRocks should prevent zero cardinality
+by always overriding it with some value.
+
+.. variable:: rocksdb_debug_ttl_ignore_pk
+
+  :version 5.7.20-18: Implemented
+  :cli: ``--rocksdb-debug-ttl-ignore-pk``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+For debugging purposes only. If true, compaction filtering will not occur
+on Primary Key TTL data. This variable is a no-op in non-debug builds.
+
+.. variable:: rocksdb_debug_ttl_read_filter_ts
+
+  :version 5.7.20-18: Implemented
+  :cli: ``--rocksdb_debug-ttl-read-filter-ts``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: ``0``
+
+For debugging purposes only.  Overrides the TTL read
+filtering time to time + :variable:`debug_ttl_read_filter_ts`.
+A value of ``0`` denotes that the variable is not set.
+This variable is a no-op in non-debug builds.
+
+.. variable:: rocksdb_debug_ttl_rec_ts
+
+  :version 5.7.20-18: Implemented
+  :cli: ``--rocksdb-debug-ttl-rec-ts``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: ``0``
+
+For debugging purposes only.  Overrides the TTL of
+records to ``now()`` + :variable:`debug_ttl_rec_ts`.
+The value can be +/- to simulate a record inserted in the past vs a record
+inserted in the "future". A value of ``0`` denotes that the
+variable is not set.
+This variable is a no-op in non-debug builds.
+
+.. variable:: rocksdb_debug_ttl_snapshot_ts
+
+  :version 5.7.20-18: Implemented
+  :cli: ``--rocksdb_debug_ttl_ignore_pk``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: ``0``
+
+For debugging purposes only.  Sets the snapshot during
+compaction to ``now()`` + :variable:`rocksdb_debug_set_ttl_snapshot_ts`.
+The value can be +/- to simulate a snapshot in the past vs a
+snapshot created in the "future". A value of ``0`` denotes
+that the variable is not set. This variable is a no-op in
+non-debug builds.
+
+.. variable:: rocksdb_default_cf_options
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-default-cf-options``
+  :dyn: No
+  :scope: Global
+  :vartype: String
+  :default:
+
+Specifies the default column family options for MyRocks.
+Empty by default.
+
+.. variable:: rocksdb_delayed_write_rate
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-delayed-write-rate``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: ``16777216``
+
+Specifies the write rate in bytes per second, which should be used
+if MyRocks hits a soft limit or threshold for writes.
+Default value is ``16777216`` (16 MB/sec).
+Allowed range is from ``0`` to ``18446744073709551615``.
+
+.. variable:: rocksdb_delete_obsolete_files_period_micros
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-delete-obsolete-files-period-micros``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``21600000000``
+
+Specifies the period in microseconds to delete obsolete files
+regardless of files removed during compaction.
+Default value is ``21600000000`` (6 hours).
+Allowed range is up to ``9223372036854775807``.
+
+.. variable:: rocksdb_enable_bulk_load_api
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-enable-bulk-load-api``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether to use the ``SSTFileWriter`` feature for bulk loading,
+This feature bypasses the memtable,
+but requires keys to be inserted into the table
+in either ascending or descending order.
+Enabled by default.
+If disabled, bulk loading uses the normal write path via the memtable
+and does not require keys to be inserted in any order.
+
+.. variable:: rocksdb_enable_ttl
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-enable-ttl``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether to keep expired TTL records during compaction.
+Enabled by default.
+If disabled, expired TTL records will be dropped during compaction.
+
+.. variable:: rocksdb_enable_ttl_read_filtering
+
+  :version 5.7.20-18: Implemented
+  :cli: ``--rocksdb-enable-ttl-read-filtering``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+For tables with TTL, expired records are skipped/filtered
+out during processing and in query results. Disabling
+this will allow these records to be seen, but as a result
+rows may disappear in the middle of transactions as they
+are dropped during compaction. **Use with caution.**
+
+.. variable:: rocksdb_enable_thread_tracking
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-enable-thread-tracking``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to enable tracking the status of threads
+accessing the database.
+Disabled by default.
+If enabled, thread status will be available via ``GetThreadList()``.
+
+.. variable:: rocksdb_enable_write_thread_adaptive_yield
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-enable-write-thread-adaptive-yield``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether the MyRocks write batch group leader
+should wait up to the maximum allowed time
+before blocking on a mutex.
+Disabled by default.
+Enable it to increase throughput for concurrent workloads.
+
+.. variable:: rocksdb_error_if_exists
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-error-if-exists``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to report an error when a database already exists.
+Disabled by default.
+
+.. variable:: rocksdb_flush_log_at_trx_commit
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-flush-log-at-trx-commit``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Numeric
+  :default: ``1``
+
+Specifies whether to sync on every transaction commit,
+similar to |innodb_flush_log_at_trx_commit|_.
+Enabled by default, which ensures ACID compliance.
+
+.. |innodb_flush_log_at_trx_commit| replace:: ``innodb_flush_log_at_trx_commit``
+.. _innodb_flush_log_at_trx_commit: https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html#sysvar_innodb_flush_log_at_trx_commit
+
+Possible values:
+
+* ``0``: Do not sync on transaction commit.
+  This provides better performance, but may lead to data inconsistency
+  in case of a crash.
+
+* ``1``: Sync on every transaction commit.
+  This is set by default and recommended
+  as it ensures data consistency,
+  but reduces performance.
+
+* ``2``: Sync every second.
+
+.. variable:: rocksdb_flush_memtable_on_analyze
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-flush-memtable-on-analyze``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether to flush the memtable when running ``ANALYZE`` on a table.
+Enabled by default.
+This ensures accurate cardinality
+by including data in the memtable for calculating stats.
+
+.. variable:: rocksdb_force_compute_memtable_stats
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-force-compute-memtable-stats``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether data in the memtables should be included
+for calculating index statistics
+used by the query optimizer.
+Enabled by default.
+This provides better accuracy, but may reduce performance.
+
+.. variable:: rocksdb_force_compute_memtable_stats_cachetime
+
+  :version 5.7.20-18: Implemented
+  :cli: ``--rocksdb-force-compute-memtable-stats-cachetime``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: 60000000
+
+Specifies for how long the cached value of memtable statistics should
+be used instead of computing it every time during the query plan analysis.
+
+.. variable:: rocksdb_force_flush_memtable_and_lzero_now
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-force-flush-memtable-and-lzero-now``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Works similar to :variable:`force_flush_memtable_now`
+but also flushes all L0 files.
+
+.. variable:: rocksdb_force_flush_memtable_now
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-force-flush-memtable-now``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Forces MyRocks to immediately flush all memtables out to data files.
+
+.. warning:: Use with caution!
+   Write requests will be blocked until all memtables are flushed.
+
+.. variable:: rocksdb_force_index_records_in_range
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-force-index-records-in-range``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Numeric
+  :default: ``1``
+
+Specifies the value used to override the number of rows
+returned to query optimizer when ``FORCE INDEX`` is used.
+Default value is ``1``.
+Allowed range is from ``0`` to ``2147483647``.
+Set to ``0`` if you do not want to override the returned value.
+
+.. variable:: rocksdb_hash_index_allow_collision
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-hash-index-allow-collision``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether hash collisions are allowed.
+Enabled by default, which uses less memory.
+If disabled, full prefix is stored to prevent hash collisions.
+
+.. variable:: rocksdb_ignore_unknown_options
+
+  :version 5.7.20-18: Implemented
+  :cli: ``--rocksdb-ignore-unknown-options``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+When enabled, it allows RocksDB to receive unknown options and not exit.
+
+.. variable:: rocksdb_index_type
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-index-type``
+  :dyn: No
+  :scope: Global
+  :vartype: Enum
+  :default: ``kBinarySearch``
+
+Specifies the type of indexing used by MyRocks:
+
+* ``kBinarySearch``: Binary search (default).
+
+* ``kHashSearch``: Hash search.
