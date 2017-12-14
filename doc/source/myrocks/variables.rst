@@ -2088,3 +2088,16 @@ Disabled by default.
 
 Specifies option updates for each column family.
 Empty by default.
+
+.. variable:: rocksdb_use_adaptive_mutex
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-use-adaptive-mutex``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to use adaptive mutex
+which spins in user space before resorting to the kernel.
+Disabled by default.
