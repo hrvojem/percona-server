@@ -2086,6 +2086,4 @@ Disabled by default.
   :vartype: Boolean
   :default: ``OFF``
 
-Specifies whether to use adaptive mutex
-which spins in user space before resorting to the kernel.
-Disabled by default.
+Specifies whether to use adaptive mutex.
