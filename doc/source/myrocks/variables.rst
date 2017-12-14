@@ -2011,3 +2011,42 @@ Lists tables (as a regular expression) that should be excluded
 from verifying case-sensitive collation
 enforced by :variable:`rocksdb_strict_collation_check`.
 Empty by default.
+
+.. variable:: rocksdb_table_cache_numshardbits
+
+  :version 5.7.19-17: Implemented
+  :version 5.7.20-18: Max value changed from ``2147483647`` to ``19``
+  :cli: ``--rocksdb-table-cache-numshardbits``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``6``
+
+Specifies the number if table caches.
+Default value is ``6``.
+Allowed range is from ``0`` to ``19``.
+
+.. variable:: rocksdb_table_stats_sampling_pct
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-table-stats-sampling-pct``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: ``10``
+
+Specifies the percentage of entries to sample
+when collecting statistics about table properties.
+Default value is ``10``.
+Allowed range is from ``0`` to ``100``.
+
+.. variable:: rocksdb_tmpdir
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-tmpdir``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: String
+  :default:
+
+Specifies the path to the directory for temporary files during DDL operations.
