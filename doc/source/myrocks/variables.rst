@@ -532,3 +532,36 @@ Also, all variables can exist in one or both of the following scopes:
      - Yes
      - Global, Session
 
+
+.. variable:: rocksdb_access_hint_on_compaction_start
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-access-hint-on-compaction-start``
+  :dyn: No
+  :scope: Global
+  :vartype: String or Numeric
+  :default: ``NORMAL`` or ``1``
+
+Specifies the file access pattern once a compaction is started,
+applied to all input files of a compaction.
+Possible values are:
+
+* ``0`` = ``NONE``
+* ``1`` = ``NORMAL`` (default)
+* ``2`` = ``SEQUENTIAL``
+* ``3`` = ``WILLNEED``
+
+.. variable:: rocksdb_advise_random_on_open
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-advise-random-on-open``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether to hint the underlying file system
+that the file access pattern is random,
+when a data file is opened.
+Enabled by default.
+
