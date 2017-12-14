@@ -2077,13 +2077,26 @@ Specifies whether to allow statement-based binary logging
 which may break consistency.
 Disabled by default.
 
-.. variable:: rocksdb_use_adaptive_mutex
+.. variable:: rocksdb_update_cf_options
 
   :version 5.7.19-17: Implemented
-  :cli: ``--rocksdb-use-adaptive-mutex``
+  :cli: ``--rocksdb-update-cf-options``
   :dyn: No
   :scope: Global
+  :vartype: String
+  :default:
+
+Specifies option updates for each column family.
+Empty by default.
+
+.. variable:: rocksdb_write_ignore_missing_column_families
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-write-ignore-missing-column-families``
+  :dyn: Yes
+  :scope: Global, Session
   :vartype: Boolean
   :default: ``OFF``
 
-Specifies whether to use adaptive mutex.
+Specifies whether to ignore writes to column families that do not exist.
+Disabled by default (writes to non-existent column families are not ignored).
