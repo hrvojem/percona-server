@@ -1944,3 +1944,160 @@ Disabled by default (bloom filters are not skipped).
 
 Specifies whether to skip caching data on read requests.
 Disabled by default (caching is not skipped).
+
+.. variable:: rocksdb_sst_mgr_rate_bytes_per_sec
+
+  :version 5.7.19-17: Implemented
+  :version 5.7.20-18: Default value changed from ``67108864`` to ``0``
+  :cli: ``--rocksdb-sst-mgr-rate-bytes-per-sec``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Numeric
+  :default: ``0``
+
+Specifies the maximum rate for writing to data files.
+Default value is ``0``. This option is not effective on HDD.
+Allowed range is from ``0`` to ``18446744073709551615``.
+
+.. variable:: rocksdb_stats_dump_period_sec
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-stats-dump-period-sec``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``600``
+
+Specifies the period in seconds for performing a dump of the MyRocks statistics
+to the info log.
+Default value is ``600``.
+Allowed range is up to ``2147483647``.
+
+.. variable:: rocksdb_store_row_debug_checksums
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-store-row-debug-checksums``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to include checksums when writing index or table records.
+Disabled by default.
+
+.. variable:: rocksdb_strict_collation_check
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-strict-collation-check``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether to check and verify
+that table indexes have proper collation settings.
+Enabled by default.
+
+.. variable:: rocksdb_strict_collation_exceptions
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-strict-collation-exceptions``
+  :dyn: Yes
+  :scope: Global
+  :vartype: String
+  :default:
+
+Lists tables (as a regular expression) that should be excluded
+from verifying case-sensitive collation
+enforced by :variable:`rocksdb_strict_collation_check`.
+Empty by default.
+
+.. variable:: rocksdb_table_cache_numshardbits
+
+  :version 5.7.19-17: Implemented
+  :version 5.7.20-18: Max value changed from ``2147483647`` to ``19``
+  :cli: ``--rocksdb-table-cache-numshardbits``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``6``
+
+Specifies the number if table caches.
+Default value is ``6``.
+Allowed range is from ``0`` to ``19``.
+
+.. variable:: rocksdb_table_stats_sampling_pct
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-table-stats-sampling-pct``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: ``10``
+
+Specifies the percentage of entries to sample
+when collecting statistics about table properties.
+Default value is ``10``.
+Allowed range is from ``0`` to ``100``.
+
+.. variable:: rocksdb_tmpdir
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-tmpdir``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: String
+  :default:
+
+Specifies the path to the directory for temporary files during DDL operations.
+
+.. variable:: rocksdb_trace_sst_api
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-trace-sst-api``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to generate trace output in the log
+for each call to ``SstFileWriter``.
+Disabled by default.
+
+.. variable:: rocksdb_unsafe_for_binlog
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-unsafe-for-binlog``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to allow statement-based binary logging
+which may break consistency.
+Disabled by default.
+
+.. variable:: rocksdb_update_cf_options
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-update-cf-options``
+  :dyn: No
+  :scope: Global
+  :vartype: String
+  :default:
+
+Specifies option updates for each column family.
+Empty by default.
+
+.. variable:: rocksdb_use_adaptive_mutex
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-use-adaptive-mutex``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to use adaptive mutex
+which spins in user space before resorting to the kernel.
+Disabled by default.
