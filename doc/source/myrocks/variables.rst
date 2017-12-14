@@ -1704,3 +1704,243 @@ input files without impacting table readers used for user queries.
 Specifies whether to disable the block cache for column families.
 Variable is disabled by default,
 meaning that using the block cache is allowed.
+
+.. variable:: rocksdb_override_cf_options
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-override-cf-options``
+  :dyn: No
+  :scope: Global
+  :vartype: String
+  :default:
+
+Specifies option overrides for each column family.
+Empty by default.
+
+.. variable:: rocksdb_paranoid_checks
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-paranoid-checks``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether MyRocks should re-read the data file
+as soon as it is created to verify correctness.
+Enabled by default.
+
+.. variable:: rocksdb_pause_background_work
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-pause-background-work``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether MyRocks should pause all background operations.
+Disabled by default. There is no practical reason for a user to ever
+use this variable because it is intended as a test synchronization tool
+for the MyRocks MTR test suites.
+
+.. warning::
+
+  If someone were to set a :variable:`rocksdb_force_flush_memtable_now` to
+  ``1`` while :variable:`rocksdb_pause_background_work` is set to ``1``,
+  the client that issued the ``rocksdb_force_flush_memtable_now=1`` will be
+  blocked indefinitely until :variable:`rocksdb_pause_background_work`
+  is set to ``0``.
+
+.. variable:: rocksdb_perf_context_level
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-perf-context-level``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Numeric
+  :default: ``0``
+
+Specifies the level of information to capture with the Perf Context plugins.
+Default value is ``0``.
+Allowed range is up to ``4``.
+
+.. variable:: rocksdb_persistent_cache_path
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-persistent-cache-path``
+  :dyn: No
+  :scope: Global
+  :vartype: String
+  :default:
+
+Specifies the path to the persistent cache.
+Set this together with :variable:`rocksdb_persistent_cache_size_mb`.
+
+.. variable:: rocksdb_persistent_cache_size_mb
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-persistent-cache-size-mb``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``0``
+
+Specifies the size of the persisten cache in megabytes.
+Default is ``0`` (persistent cache disabled).
+Allowed range is up to ``18446744073709551615``.
+Set this together with :variable:`rocksdb_persistent_cache_path`.
+
+.. variable:: rocksdb_pin_l0_filter_and_index_blocks_in_cache
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-pin-l0-filter-and-index-blocks-in-cache``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``ON``
+
+Specifies whether MyRocks pins the filter and index blocks in the cache
+if :variable:`rocksdb_cache_index_and_filter_blocks` is enabled.
+Enabled by default.
+
+.. variable:: rocksdb_print_snapshot_conflict_queries
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-print-snapshot-conflict-queries``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether queries that generate snapshot conflicts
+should be logged to the error log.
+Disabled by default.
+
+.. variable:: rocksdb_rate_limiter_bytes_per_sec
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-rate-limiter-bytes-per-sec``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: ``0``
+
+Specifies the maximum rate at which MyRocks can write to media
+via memtable flushes and compaction.
+Default value is ``0`` (write rate is not limited).
+Allowed range is up to ``9223372036854775807``.
+
+.. variable:: rocksdb_read_free_rpl_tables
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-read-free-rpl-tables``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: String
+  :default:
+
+Lists tables (as a regular expression)
+that should use read-free replication on the slave
+(that is, replication without row lookups).
+Empty by default.
+
+.. variable:: rocksdb_records_in_range
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-records-in-range``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Numeric
+  :default: ``0``
+
+Specifies the value to override the result of ``records_in_range()``.
+Default value is ``0``.
+Allowed range is up to ``2147483647``.
+
+.. variable:: rocksdb_reset_stats
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-reset-stats``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Resets MyRocks internal statistics dynamically
+(without restarting the server).
+
+.. variable:: rocksdb_rpl_skip_tx_api
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-rpl-skip-tx-api``
+  :dyn: No
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether write batches should be used for replication thread
+instead of the transaction API.
+Disabled by default.
+
+.. variable:: rocksdb_seconds_between_stat_computes
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-seconds-between-stat-computes``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Numeric
+  :default: ``3600``
+
+Specifies the number of seconds to wait
+between recomputation of table statistics for the optimizer.
+During that time, only changed indexes are updated.
+Default value is ``3600``.
+Allowed is from ``0`` to ``4294967295``.
+
+.. variable:: rocksdb_signal_drop_index_thread
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-signal-drop-index-thread``
+  :dyn: Yes
+  :scope: Global
+  :vartype: Boolean
+  :default: ``OFF``
+
+Signals the MyRocks drop index thread to wake up.
+
+.. variable:: rocksdb_sim_cache_size
+
+  :version 5.7.20-18: Implemented
+  :cli: ``--rocksdb-sim-cache-size``
+  :dyn: No
+  :scope: Global
+  :vartype: Numeric
+  :default: ``0``
+
+Enables the simulated cache, which allows us to figure out the hit/miss rate
+with a specific cache size without changing the real block cache.
+
+.. variable:: rocksdb_skip_bloom_filter_on_read
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-skip-bloom-filter-on_read``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether bloom filters should be skipped on reads.
+Disabled by default (bloom filters are not skipped).
+
+.. variable:: rocksdb_skip_fill_cache
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-skip-fill-cache``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to skip caching data on read requests.
+Disabled by default (caching is not skipped).
