@@ -2050,3 +2050,29 @@ Allowed range is from ``0`` to ``100``.
   :default:
 
 Specifies the path to the directory for temporary files during DDL operations.
+
+.. variable:: rocksdb_trace_sst_api
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-trace-sst-api``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to generate trace output in the log
+for each call to ``SstFileWriter``.
+Disabled by default.
+
+.. variable:: rocksdb_unsafe_for_binlog
+
+  :version 5.7.19-17: Implemented
+  :cli: ``--rocksdb-unsafe-for-binlog``
+  :dyn: Yes
+  :scope: Global, Session
+  :vartype: Boolean
+  :default: ``OFF``
+
+Specifies whether to allow statement-based binary logging
+which may break consistency.
+Disabled by default.
